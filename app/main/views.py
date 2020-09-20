@@ -209,5 +209,48 @@ def like(pitch_id):
 @main.route('/pitch/<int:pitch_id>/dislike',methods = ['GET','POST'])
 @login_required
 def dislike(pitch_id):
+     '''
+    View dislike function that returns dislikes
+    '''
+    pitch = Pitch.query.get(pitch_id)
+    user = current_user
+
+    pitch_dislikes = Dislike.query.filter_by(pitch_id=pitch_id)
+
+    if Dislike.query.filter(Dislike.user_id==user.id,Dislike.pitch_id==pitch_id).first():
+        return redirect(url_for('.index'))
+
+    new_dislike = Dislike(pitch_id=pitch_id, user = current_user)
+    new_dislike.save_dislikes()
+    return redirect(url_for('.index'))
+
+
+
+@main.route('/user/category/advertisement', methods=['GET', 'POST'])
+@login_required
+def advertisement():
+    form = AdvertisementForm()
+    title = 'Post a pitch'
+    if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_advertisement = Advertisement(post=post, user=current_user, body=body)
+        new_advertisement.save_advertisement()
+        return redirect(url_for('.advertisements'))
+    return render_template("advertisement.html", advertisement_form=form, title=title)
+
+
+@main.route('/user/category/project', methods=['GET', 'POST'])
+@login_required
+def project():
+    form = ProjectForm()
+    title = 'Post a pitch'
+    if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_project = Project(post=post, user=current_user, body=body)
+        new_project.save_project()
+        return redirect(url_for('.projects'))
+
 
   
