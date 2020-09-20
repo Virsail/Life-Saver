@@ -251,6 +251,80 @@ def project():
         new_project = Project(post=post, user=current_user, body=body)
         new_project.save_project()
         return redirect(url_for('.projects'))
+     return render_template("project.html", project_form=form, title=title)
+
+
+@main.route('/user/category/music', methods=['GET', 'POST'])
+@login_required
+def music():
+    form = MusicForm()
+    title = 'Post a pitch'
+    if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_music = Music(post=post, user=current_user, body=body)
+        new_music.save_music()
+        return redirect(url_for('.musics'))
+    return render_template("music.html", music_form=form, title=title)
+
+
+@main.route('/user/category/interview', methods=['GET', 'POST'])
+@login_required
+def interview():
+    form = InterviewForm()
+    title = 'Post a pitch'
+    if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_interview = Interview(post=post, user=current_user, body=body)
+        new_interview.save_interview()
+        return redirect(url_for('.interviews'))
+    return render_template("interview.html", interview_form=form, title=title)
+
+
+@main.route('/user/category/seduction', methods=['GET', 'POST'])
+@login_required
+def seduction():
+    form = SeductionForm()
+    title = 'Post a pitch'
+      if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_seduction = Seduction(post=post, user=current_user, body=body)
+        new_seduction.save_seduction()
+        return redirect(url_for('.seductions'))
+    return render_template("seduction.html", seduction_form=form, title=title)
+
+
+@main.route('/user/category/sale', methods=['GET', 'POST'])
+@login_required
+def sale():
+    form = SaleForm()
+    title = 'Post a pitch'
+    if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_sale = Sale(post=post, user=current_user, body=body)
+        new_sale.save_sale()
+        return redirect(url_for('.sales'))
+    return render_template("sale.html", sale_form=form, title = title)
+
+
+@main.route('/user/category/general', methods=['GET', 'POST'])
+@login_required
+def general():
+    form = GeneralForm()
+    title = 'Post a pitch'
+    if form.validate_on_submit():
+        post = form.post.data
+        body = form.body.data
+        new_general = General(post=post, user=current_user, body=body)
+        new_general.save_general()
+        return redirect(url_for('.generals'))
+    return render_template("general.html", general_form=form, title=title)
+
+
+@main.route('/user/category/advertisements')
 
 
   
