@@ -325,6 +325,182 @@ def general():
 
 
 @main.route('/user/category/advertisements')
+@login_required
+def advertisements():
+    title = 'Advertisement'
+    posts = Advertisement.query.all()
+    return render_template("advert.html", posts=posts, title=title)
+
+
+@main.route('/user/advertisement/<int:id>', methods=['POST', 'GET'])
+@login_required
+def displayadvertisement(id):
+    advertisement = Advertisement.query.get(id)
+    form = AdvertisementReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_advertisementreview = ReviewAdvertisement(
+            review=review, advertisement_id=id, user=current_user)
+        new_advertisementreview.save_reviewadvertisement()
+
+    review = ReviewAdvertisement.query.filter_by(advertisement_id=id).all()
+    return render_template('advertpitch.html', advertisement=advertisement, review_form=form, review=review)
+
+@main.route('/user/category/projects')
+@login_required
+def projects():
+    title = 'Project'
+    posts = Project.query.all()
+    return render_template("proj.html", posts=posts, title=title)
+
+
+@main.route('/user/project/<int:id>', methods=['POST', 'GET'])
+@login_required
+def displayproject(id):
+    project = Project.query.get(id)
+    form = ProjectReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_projectreview = ReviewProject(
+            review=review, project_id=id, user=current_user)
+        new_projectreview.save_reviewproject()
+
+    review = ReviewProject.query.filter_by(project_id=id).all()
+    return render_template('projectpitch.html', project=project, review_form=form, review=review)
+
+@main.route('/user/category/musics')
+@login_required
+def musics():
+    title = 'Music'
+    posts = Music.query.all()
+    return render_template("misc.html", posts=posts, title=title)
+
+
+@main.route('/user/music/<int:id>', methods=['POST', 'GET'])
+@login_required
+def displaymusic(id):
+    music = Music.query.get(id)
+    form = MusicReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_musicreview = ReviewMusic(
+            review=review, music_id=id, user=current_user)
+        new_musicreview.save_reviewmusic()
+
+    review = ReviewMusic.query.filter_by(music_id=id).all()
+    return render_template('musicpitch.html', music=music, review_form=form, review=review)
+
+
+@main.route('/user/category/seductions')
+@login_required
+def seductions():
+    title = 'Seduction'
+    posts = Seduction.query.all()
+    return render_template("seduct.html", posts=posts, title=title)
+
+
+@main.route('/user/seduction/<int:id>', methods=['POST', 'GET'])
+@login_required
+def displayseduction(id):
+    seduction = Seduction.query.get(id)
+    form = SeductionReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_seductionreview = ReviewSeduction(
+            review=review, seduction_id=id, user=current_user)
+        new_seductionreview.save_reviewseduction()
+
+    review = ReviewSeduction.query.filter_by(seduction_id=id).all()
+    return render_template('seductpitch.html', seduction=seduction, review_form=form, review=review)
+
+
+@main.route('/user/category/sales')
+@login_required
+def sales():
+    title = 'Sale'
+    posts = Sale.query.all()
+    return render_template("sal.html", posts=posts, title=title)
+
+
+@main.route('/user/sale/<int:id>', methods=['GET', 'POST'])
+@login_required
+def displaysale(id):
+    sale = Sale.query.get(id)
+    form = SaleReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_salereview = ReviewSale(
+            review=review, sale_id=id, user=current_user)
+        new_salereview.save_reviewsale()
+
+    review = ReviewSale.query.filter_by(sale_id=id).all()
+    return render_template('salepitch.html', sale=sale, review_form=form, review=review)
+
+
+@main.route('/user/categor/generals')
+@login_required
+def generals():
+    title = 'General'
+    posts = General.query.all()
+    return render_template("gen.html", posts=posts, title=title)
+
+@main.route('/user/general/<int:id>', methods=['GET', 'POST'])
+@login_required
+def displaygeneral(id):
+    general = General.query.get(id)
+    form = GeneralReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_generalreview = ReviewGeneral(
+            review=review, general_id=id, user=current_user)
+        new_generalreview.save_reviewgeneral()
+
+    review = ReviewGeneral.query.filter_by(general_id=id).all()
+    return render_template('genpitch.html', general=general, review_form=form, review=review)
+
+
+@main.route('/user/rating')
+@login_required
+def ratings():
+    upvote = Upvote(user=current_user)
+    upvote.save_upvote()
+    votes = db.session.query(func.sum(Upvote.upvote)).scalar()
+    votes = str(votes)
+    return votes
+
+
+@main.route('/user/rating')
+@login_required
+def rating():
+    downvote = Downvote(user=current_user)
+    downvote.save_downvote()
+    votes = db.session.query(func.sum(Downvote.downvote)).scalar()
+    votes = str(votes)
+    return votes
+
+
+@main.route('/user/category/interviews')
+@login_required
+def interviews():
+    title = 'Interview'
+    posts = Interview.query.all()
+    return render_template("inter.html", posts=posts, title=title)
+
+
+@main.route('/user/interview/<int:id>', methods=['GET', 'POST'])
+@login_required
+def displayinterview(id):
+    interview = Interview.query.get(id)
+    form = InterviewReviewForm()
+    if form.validate_on_submit():
+        review = form.review.data
+        new_interviewreview = ReviewInterview(
+            review=review, interview_id=id, user=current_user)
+        new_interviewreview.save_reviewinterview()
+
+    review = ReviewInterview.query.filter_by(interview_id=id).all()
+    return render_template('interviewpitch.html', interview=interview, review_form=form, review=review)
+
 
 
   
