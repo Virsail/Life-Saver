@@ -49,7 +49,7 @@ class SeductionForm(FlaskForm):
 
 class SeductionReviewForm(FlaskForm):
     review = StringField('Review: ', validators=[Required()])
-     submit = SubmitField('Submit')
+    submit = SubmitField('Submit')
 
 
 class MusicForm(FlaskForm):

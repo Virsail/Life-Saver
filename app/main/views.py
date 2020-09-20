@@ -23,7 +23,7 @@ def update_profile(uname):
     if user is None:
         abort(404)
 
-         form = UpdateProfile()
+        form = UpdateProfile()
 
     if form.validate_on_submit():
         user.bio = form.bio.data
@@ -53,7 +53,7 @@ def index():
     dislikes = Dislike.get_all_dislikes(pitch_id=Pitch.id)
 
 
-     title = 'Home | One Min Pitch'
+    title = 'Home | One Min Pitch'
     return render_template('index.html', title = title, pitch = pitch, general = general, project = project, advertisement = advertisement, sale = sale, likes=likes, dislikes=dislikes)
 
 
@@ -97,7 +97,7 @@ def update_profile(uname):
 
         return redirect(url_for('.profile',uname=user.username))
 
-      return render_template('profile/update.html',form =form)
+        return render_template('profile/update.html',form =form)
 
 
 @main.route('/user/<uname>/update/pic',methods=['POST'])
@@ -138,7 +138,7 @@ def pitch():
     '''
     View pitch function that returns the pitch page and data
     '''
-     pitch_form = PitchForm()
+    pitch_form = PitchForm()
     likes = Like.query.filter_by(pitch_id=Pitch.id)
 
     if pitch_form.validate_on_submit():
@@ -209,7 +209,7 @@ def like(pitch_id):
 @main.route('/pitch/<int:pitch_id>/dislike',methods = ['GET','POST'])
 @login_required
 def dislike(pitch_id):
-     '''
+    '''
     View dislike function that returns dislikes
     '''
     pitch = Pitch.query.get(pitch_id)
@@ -223,6 +223,7 @@ def dislike(pitch_id):
     new_dislike = Dislike(pitch_id=pitch_id, user = current_user)
     new_dislike.save_dislikes()
     return redirect(url_for('.index'))
+
 
 
 
@@ -251,7 +252,8 @@ def project():
         new_project = Project(post=post, user=current_user, body=body)
         new_project.save_project()
         return redirect(url_for('.projects'))
-     return render_template("project.html", project_form=form, title=title)
+    return render_template("project.html", project_form=form, title=title)
+
 
 
 @main.route('/user/category/music', methods=['GET', 'POST'])
@@ -287,7 +289,7 @@ def interview():
 def seduction():
     form = SeductionForm()
     title = 'Post a pitch'
-      if form.validate_on_submit():
+    if form.validate_on_submit():
         post = form.post.data
         body = form.body.data
         new_seduction = Seduction(post=post, user=current_user, body=body)
