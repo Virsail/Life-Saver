@@ -138,5 +138,44 @@ def pitch():
     '''
     View pitch function that returns the pitch page and data
     '''
+     pitch_form = PitchForm()
+    likes = Like.query.filter_by(pitch_id=Pitch.id)
+
+    if pitch_form.validate_on_submit():
+        body = pitch_form.body.data
+        category = pitch_form.category.data
+        title = pitch_form.title.data
+
+        new_pitch = Pitch(title=title, body=body, category = category, user = current_user)
+        new_pitch.save_pitch()
+
+        return redirect(url_for('main.index'))
+
+
+    title = 'New Pitch | One Minute Pitch'
+    return render_template('pitch.html', title = title, pitch_form = pitch_form, likes = likes)
+
+
+@main.route('/pitch/<int:pitch_id>/comment',methods = ['GET', 'POST'])
+@login_required
+def comment(pitch_id):
+    '''
+    View comments page function that returns the comment page and its data
+    '''
+
+    comment_form = CommentForm()
+    pitch = Pitch.query.get(pitch_id)
+    if pitch is None:
+        abort(404)
+
+    if comment_form.validate_on_submit():
+        comment_body = comment_form.comment_body.data
+
+        new_comment = Comment(comment=comment_body, pitch_id = pitch_id, user = current_user)
+        new_comment.save_comment()
+
+        return redirect(url_for('.comment', pitch_id=pitch_id))
+
+    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
 
   
