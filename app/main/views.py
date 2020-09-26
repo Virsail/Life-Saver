@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from .forms import UpdateProfile, GeneralForm, GeneralReviewForm, SaleForm, SaleReviewForm, SeductionForm, SeductionReviewForm, MusicForm, MusicReviewForm, ProjectForm, ProjectReviewForm, InterviewForm, InterviewReviewForm, AdvertisementForm, AdvertisementReviewForm
 from .. import db
 from sqlalchemy import func
-from ..models import User, Like, Dislike, Pitch
+from ..models import User 
 
 @main.route('/home',methods = ['GET', 'POST'])
 def index():
