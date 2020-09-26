@@ -4,17 +4,27 @@ from flask_login import login_required, current_user
 from .forms import UpdateProfile, GeneralForm, GeneralReviewForm, SaleForm, SaleReviewForm, SeductionForm, SeductionReviewForm, MusicForm, MusicReviewForm, ProjectForm, ProjectReviewForm, InterviewForm, InterviewReviewForm, AdvertisementForm, AdvertisementReviewForm
 from .. import db
 from sqlalchemy import func
-from ..models import User, Interview, Advertisement, Project, Music, Sale, Seduction, General, ReviewAdvertisement, ReviewGeneral, ReviewInterview, ReviewMusic, ReviewProject, ReviewSale, ReviewSeduction, Upvote, Downvote
+from ..models import User, Like, Dislike, Pitch
 
-@main.route('/')
+@main.route('/home',methods = ['GET', 'POST'])
 def index():
     """
     View root page function that returns the index page and its data
     """
-    title = 'Home - Welcome to The Pitch website'
+    general = Pitch.query.filter_by(category="general").order_by(Pitch.date).all()
+    project = Pitch.query.filter_by(category="project").order_by(Pitch.date).all()
+    advertisement = Pitch.query.filter_by(category="advertisement").order_by(Pitch.date).all()
+    sale = Pitch.query.filter_by(category="sale").order_by(Pitch.date).all()
 
-    return render_template('index.html', title=title)
+    pitch = Pitch.query.filter_by().first()
+    likes = Like.get_all_likes(pitch_id=Pitch.id)
+    dislikes = Dislike.get_all_dislikes(pitch_id=Pitch.id)
 
+
+    title = 'Home | One Min Pitch'
+    return render_template('index.html', title = title, pitch = pitch, general = general, project = project, advertisement = advertisement, sale = sale, likes=likes, dislikes=dislikes)
+
+    
 
 @main.route('/user/<uname>/update', methods=['GET', 'POST'])
 @login_required
@@ -23,7 +33,7 @@ def update_profile(uname):
     if user is None:
         abort(404)
 
-        form = UpdateProfile()
+    form = UpdateProfile()
 
     if form.validate_on_submit():
         user.bio = form.bio.data
@@ -35,26 +45,6 @@ def update_profile(uname):
 
     return render_template('profile/update.html', form=form)
 
-
-@main.route('/',methods = ['GET', 'POST'])
-
-def index():
-
-    '''
-    View root page function that returns the index page and its data
-    '''
-    general = Pitch.query.filter_by(category="general").order_by(Pitch.posted.desc()).all()
-    project = Pitch.query.filter_by(category="project").order_by(Pitch.posted.desc()).all()
-    advertisement = Pitch.query.filter_by(category="advertisement").order_by(Pitch.posted.desc()).all()
-    sale = Pitch.query.filter_by(category="sale").order_by(Pitch.posted.desc()).all()
-
-    pitch = Pitch.query.filter_by().first()
-    likes = Like.get_all_likes(pitch_id=Pitch.id)
-    dislikes = Dislike.get_all_dislikes(pitch_id=Pitch.id)
-
-
-    title = 'Home | One Min Pitch'
-    return render_template('index.html', title = title, pitch = pitch, general = general, project = project, advertisement = advertisement, sale = sale, likes=likes, dislikes=dislikes)
 
 
 
@@ -77,27 +67,6 @@ def profile(uname):
     return render_template("profile/profile.html", user = user, title=title, pitches_no = get_pitches, comments_no = get_comments, likes_no = get_likes, dislikes_no = get_dislikes)
 
 
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
-@login_required
-def update_profile(uname):
-    '''
-    View update profile page function that returns the update profile page and its data
-    '''
-    user = User.query.filter_by(username = uname).first()
-    if user is None:
-        abort(404)
-
-    form = UpdateProfile()
-
-    if form.validate_on_submit():
-        user.bio = form.bio.data
-
-        db.session.add(user)
-        db.session.commit()
-
-        return redirect(url_for('.profile',uname=user.username))
-
-        return render_template('profile/update.html',form =form)
 
 
 @main.route('/user/<uname>/update/pic',methods=['POST'])
@@ -116,8 +85,7 @@ def update_pic(uname):
 
 
 
-@main.route('/home', methods = ['GET', 'POST'])
-@login_required
+@main.route('/', methods = ['GET', 'POST'])
 def index2():
     '''
     View index2 function that returns the home page
@@ -129,11 +97,10 @@ def index2():
     pitch = Pitch.get_all_pitches()
 
     title = 'Home | One Min Pitch'
-    return render_template('home.html', title = title, pitch = pitch, advertisement = advertisement, project = project, general = general, sale = sale)
+    return render_template('index.html', title = title, pitch = pitch, advertisement = advertisement, project = project, general = general, sale = sale)
 
 
 @main.route('/pitch/new',methods = ['GET','POST'])
-@login_required
 def pitch():
     '''
     View pitch function that returns the pitch page and data
@@ -226,7 +193,6 @@ def dislike(pitch_id):
 
 
 
-
 @main.route('/user/category/advertisement', methods=['GET', 'POST'])
 @login_required
 def advertisement():
@@ -253,7 +219,6 @@ def project():
         new_project.save_project()
         return redirect(url_for('.projects'))
     return render_template("project.html", project_form=form, title=title)
-
 
 
 @main.route('/user/category/music', methods=['GET', 'POST'])
@@ -503,6 +468,3 @@ def displayinterview(id):
     review = ReviewInterview.query.filter_by(interview_id=id).all()
     return render_template('interviewpitch.html', interview=interview, review_form=form, review=review)
 
-
-
-  
