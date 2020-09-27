@@ -76,8 +76,10 @@ Powershell
 
 ## Contact Information 
 
-If you have any question or contributions, please email me at [mikeycharlesm7@gmail.com]
+Reach me on @Ericmbagaya@gmail.com
+Feel free to visit the link (https://github.com/Virsail)
 
-## License
-* *MIT License:*
-* Copyright (c) 2019 **Owiti Charles**
+### License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Copyright (c) 2020 @mbagaya
+
