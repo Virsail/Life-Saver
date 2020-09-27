@@ -2,3 +2,5 @@ virtual/
 start.sh
 pitch/
 *pyc
+__pycache__
+
