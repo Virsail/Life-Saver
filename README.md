@@ -77,7 +77,7 @@ Powershell
 ## Contact Information 
 
 Reach me on @Ericmbagaya@gmail.com
-Feel free to visit the link (https://github.com/Virsail)
+Also check out (https://github.com/Virsail)
 
 ### License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
