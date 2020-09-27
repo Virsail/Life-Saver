@@ -16,13 +16,16 @@ This  is a flask application that allows users to post one minute pitches and al
 
 
 ## User Story
-
-* Comment on the different pitches posted py other uses.
-* See the pitches posted by other uses.
-* Vote on s pitch they have viwed by giving it a upvote or a downvote.
-* Register to be allowed to log in to the application
+As a user i would like to:
+* Comment on the different pitches posted py other users including my own pitch and leave feedback
+* See the pitches posted by other users.
+* Vote on a pitch by giving it an upvote or a downvote.
+* Be signed in for me to leave a comment
+* Receive a welcome email when i sign up to the app
 * View pitches from the different categories.
-* Submit a pitch to a specific category of their choice.
+* Submit a pitch to any category of choice
+* View pitches I have created in my profile page
+
 
 ## BDD
 | Behaviour | Input | Output |
