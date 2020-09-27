@@ -45,24 +45,20 @@ To get the code..
 
 1. Cloning the repository:
   ```bash
-  
+  https://github.com/Virsail/Life-Saver.git
   ```
 2. Move to the folder 
   ```bash
   cd pitch
   
   ```
-3. Exporting Configurations
+3. Running the application
   ```bash
-  export SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://{User Name}:{password}@localhost/{database name}
+  python3.8 manage.py server
   ```
-4. Running the application
+4.Testing the application
   ```bash
-  python3.6 manage.py server
-  ```
-5. Testing the application
-  ```bash
-  python3.6 manage.py test
+  python3.8 manage.py test
   ```
 Open the application on your browser `127.0.0.1:5000`.
 
