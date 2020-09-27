@@ -45,12 +45,12 @@ To get the code..
 
 1. Cloning the repository:
   ```bash
-  https://github.com/Owiti-Charles/pitch-world.git
+  
   ```
-2. Move to the folder and install requirements
+2. Move to the folder 
   ```bash
-  cd pitch-world
-  pip install -r requirements.txt
+  cd pitch
+  
   ```
 3. Exporting Configurations
   ```bash
