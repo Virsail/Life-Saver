@@ -11,7 +11,7 @@ This  is a flask application that allows users to post one minute pitches and al
 
 ## Screenshot
 
-https://github.com/Virsail/Life-Saver/issues/1#issue-709712225
+![Screenshot from 2020-09-27 13-15-54](https://user-images.githubusercontent.com/66640798/94362509-70bda980-00c4-11eb-8eb5-44a74c48c67d.png)
 
 ## User Story
 
